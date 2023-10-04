@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blog">
+	<select id="findBlog" parameterType="string" resultType="blogvo">
+		<![CDATA[
+		select	title,
+				image,
+				blog_id as blogId
+		   from blog
+		  where blog_id = #{blogId }		
+		]]>
+	</select>
+
+	<select id="findCategory" parameterType="string"
+		resultType="categoryvo">
+		<![CDATA[
+		select	no,
+				name,
+				description,
+				blog_id as blogId
+		   from category
+		  where blog_id = #{blogId }
+		]]>
+	</select>
+
+	<select id="findPost" parameterType="map" resultType="postvo">
+		<![CDATA[
+		select	no,
+				title,
+				contents,
+				category_no as categoryNo
+		   from post
+		  where category_no = #{categoryNo }		
+		]]>
+	</select>
+
+	<insert id="insert" parameterType="uservo">
+		<![CDATA[
+		insert
+		  into blog
+		values (#{name }, 'image', #{id })
+		]]>
+	</insert>
+
+	<select id="findDetailCategory" parameterType="string"
+		resultType="categoryvo">
+		<![CDATA[
+		select  c.no,
+				c.name, 
+				c.description, 
+				c.blog_id as blogId,
+				(select count(*) from post where category_no = c.no) as total
+		from category c
+		where blog_id = #{blogId }
+		]]>
+	</select>
+
+	<delete id="deletePost" parameterType="map"> 
+		<![CDATA[
+		delete
+		  from post
+		 where category_no = #{no }
+		]]>
+	</delete>
+	<delete id="deleteCategory" parameterType="map"> 
+		<![CDATA[
+		delete
+		  from category
+		 where no = #{no }
+		]]>
+	</delete>
+
+	<insert id="writeCategory" parameterType="map">
+		<![CDATA[
+		insert
+		  into category
+		values (null,
+				#{name },
+				#{description },
+				#{blogId})
+		]]>
+	</insert>
+	
+	<insert id="writePost" parameterType="map">
+		<![CDATA[
+		insert
+		  into post
+		values (null,
+				#{title },
+				#{contents },
+				#{categoryNo})
+		]]>
+	</insert>
+	
+	<update id="updateBlog" parameterType="map">
+		<![CDATA[
+		update blog
+			set title=#{title}, image=#{url}
+			where blog_id=#{blogId}
+		]]>
+	</update>
+</mapper>
