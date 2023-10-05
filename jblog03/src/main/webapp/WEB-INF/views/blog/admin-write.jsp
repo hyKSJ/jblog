@@ -14,8 +14,9 @@
 <body>
 	<div id="container">
 		<div id="header">
-			<h1>${authUser.id}</h1>
+			<h1>${map.blogVo.title}</h1>
 			<ul>
+				<li><a href="${pageContext.request.contextPath}/${authUser.id}">홈으로</a></li>
 				<li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
 			</ul>
 		</div>

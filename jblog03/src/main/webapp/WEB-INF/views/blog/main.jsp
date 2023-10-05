@@ -23,7 +23,9 @@
 					<c:otherwise>
 						<li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
 						<c:if test="${authUser.id == map.blogId}">
-							<li><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">블로그 관리</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">블로그
+									관리</a></li>
 						</c:if>
 					</c:otherwise>
 				</c:choose>
@@ -48,8 +50,14 @@
 
 		<div id="extra">
 			<div class="blog-logo">
-				<img
-					src="${pageContext.request.contextPath}${map.blogVo.image}">
+				<c:choose>
+					<c:when test="${map.blogVo.image == 'image' }">
+						<img src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg">
+					</c:when>
+					<c:otherwise>
+						<img src="${pageContext.request.contextPath}${map.blogVo.image}">
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 
